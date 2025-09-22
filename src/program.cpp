@@ -106,13 +106,8 @@ bool program_flash(Radio &driver) {
 
     /** 
      * TODO: 
-     * 1. rst, boot, updated fine -> jump to application
-     * 2. rst -> jump to application
-     * 3. rst, boot -> jump to application (after timeout)  
-     * 4. rst, boot, updated fail (no modified flash) -> jump to application
-     * 5. rst, boot, updated fail (modified flash) -> while (true) wait for new boot + update fine
      * extra feature
-     * 6. rst, boot, updated fail (modified flash) + EEPROM backup -> write EEPROM backup to flash + jump to application */ 
+     * rst, boot, updated fail (modified flash) + EEPROM backup -> write EEPROM backup to flash + jump to application */ 
 
     LED_ON; // LED ON initially
 

@@ -33,7 +33,7 @@ static void jump_to_application(void) {
     // disable all interrupts
     cli();
 
-    // Disable ALL timer interrupts
+    // disable ALL timer interrupts
     TIMSK0 = 0;
     TIMSK1 = 0;
 
@@ -45,14 +45,14 @@ static void jump_to_application(void) {
     TCCR1A = 0;
     TCCR1B = 0;
 
-    // Reset ALL I/O ports to power-on defaults
+    // reset ALL I/O ports to power-on defaults
     DDRB = 0;
     PORTB = 0;
 
     // switch back to application vectors (do this last)
     map_vectors_to_application();
     
-    // Reset stack pointer to top of RAM 0x08FF
+    // reset stack pointer to top of RAM 0x08FF
     // ATmega328P has 2KB SRAM from 0x0100 to 0x08FF
     asm volatile (
         "ldi r30, 0xFF \n\t"    // load SPL with 0xFF 
@@ -66,7 +66,6 @@ static void jump_to_application(void) {
         : "r30"
     );
     
-    // Should never reach here
     while(1);
 }
 
@@ -111,7 +110,6 @@ void bootloader_main(void) {
     
     // [x] 1. initialize the radio
     Radio driver;
-    // RH_ASK driver(2000, 6, 5, 4, false);
 
     if (!driver.init()) {
         // Radio init failed - jump to app
@@ -177,14 +175,16 @@ void bootloader_main(void) {
             LED_OFF;
 
             if (success) {
-                // Programming successful - jump to application
+                // programming successful, jump to application
                 jump_to_application();
-                return; // Should never reach here
+                return; // should never reach here
             }
-            
-            // Programming failed - loop will check corruption state again
-            // If corrupted, it will enter infinite wait mode
-            // If not corrupted, it will timeout and jump to app
+
+            // if it reaches here, it means the programming failed
+            // the bootloader will attempt to enter infinite wait mode
+            // and just wait for a new firmware update
+            // if corrupted, it will enter infinite wait mode
+            // if not corrupted, it will timeout and jump to app
         }
     }
 }
