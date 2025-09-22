@@ -44,6 +44,8 @@ The programmer is a simple Arduino project that can be flashed onto the device. 
 
 Once the bootloader is flashed, you will need to wire the radios to the microcontrollers. This can be configured in the `config.h` file, however, I've set them up so the reciever uses `PB6` and the transmitter uses `PB5`. I've set it to these pins because pins `PB4` and `PB3` are used by the Arduino as ISP. Again, you're free to change these pins in the `config.h` file. You'll also need to connect the transmitter and receiver to programmer, and this can be configured in the `config.h` in the `programmer/src/config.h` file (I have these set to `PB4` (transmitter) and `PB3` (receiver), sorry for the confusion).
 
+<img width="640" height="320" alt="circuit (1) (1)" src="https://github.com/user-attachments/assets/c271f44c-5b65-4c98-84d3-1e011a4e7087" />
+
 ### CLI
 
 To use the CLI, you'll need to install Python and the `pyserial` library. You can do this by running the following command:
